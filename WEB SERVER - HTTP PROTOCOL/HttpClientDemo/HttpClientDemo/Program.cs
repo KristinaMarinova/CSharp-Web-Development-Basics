@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,10 +12,10 @@ namespace HttpClientDemo
     {
         static async Task Main(string[] args)
         {
-
+            TcpListener tcpListener = new TcpListener(IPAddress.Loopback, 80);
         }
 
-        public async Task ReadData()
+        public static async Task ReadData()
         {
             Console.OutputEncoding = Encoding.UTF8;
             string url = "https://softuni.bg/trainings/3164/csharp-web-basics-september-2020";
