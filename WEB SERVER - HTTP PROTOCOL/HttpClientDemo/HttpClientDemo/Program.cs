@@ -28,7 +28,23 @@ namespace HttpClientDemo
                     string requestString = Encoding.UTF8.GetString(buffer, 0, lenght); // convert from byte array to text
                     Console.WriteLine(requestString);
 
-                    
+                    string html = $"<h1>Hello from KrisiServer {DateTime.Now}</h1>" +
+                        $"<form action=/tweet method=post><input name=username /><input name=password />" +
+                        $"<input type=submit /></form>";
+
+                    string response = "HTTP/1.1 200 OK" + NewLine +
+                        "Server: KrisiServer 2020" + NewLine +
+                        // "Location: https://www.google.com" + NewLine +
+                        "Content-Type: text/html; charset=utf-8" + NewLine +
+                        // "Content-Disposition: attachment; filename=krisi.txt" + NewLine +
+                        "Content-Lenght: " + html.Length + NewLine +
+                        NewLine +
+                        html + NewLine;
+
+                    byte[] responseBytes = Encoding.UTF8.GetBytes(response);
+                    stream.Write(responseBytes);
+
+                    Console.WriteLine(new string('=', 70));
                 }
             }
         }
