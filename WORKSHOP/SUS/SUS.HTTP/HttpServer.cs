@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 
 namespace SUS.HTTP
 {
@@ -20,9 +22,20 @@ namespace SUS.HTTP
             }
         }
 
-        public void Start(int port)
+        public async Task Start(int port)
         {
             TcpListener tcpListener = new TcpListener(IPAddress.Loopback, port);
+
+            while (true)
+            {
+                TcpClient tcpClient = await tcpListener.AcceptTcpClientAsync();
+                ProcessClient(tcpClient);
+            }
+        }
+
+        private async Task ProcessClient(TcpClient tcpClient)
+        {
+            throw new NotImplementedException();
         }
     }
 }
