@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
@@ -11,8 +12,6 @@ namespace SUS.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        private const int BufferSize = 4096;
-        private const string NewLine = "\r\n";
         IDictionary<string, Func<HttpRequest, HttpResponce>> routeTable = new Dictionary<string, Func<HttpRequest, HttpResponce>>();
         public void AddRoute(string path, System.Func<HttpRequest, HttpResponce> action)
         {
@@ -45,7 +44,7 @@ namespace SUS.HTTP
 
                 int position = 0;
 
-                byte[] buffer = new byte[BufferSize];
+                byte[] buffer = new byte[HttpConstants.BufferSize];
 
                 while (true)
                 {
@@ -69,16 +68,17 @@ namespace SUS.HTTP
 
                 var requestAsString = Encoding.UTF8.GetString(data.ToArray());
 
+                var request = new HttpRequest(requestAsString);
                 Console.WriteLine(requestAsString);
 
-                var responseHtml = "<h1>Welcome from Krisi!</h1>";
+                var responseHtml = "<h1>Welcome from Krisi!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
                 var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
 
-                var httpResponse = "HTTP/1.1 200 OK" + NewLine +
-                    "Server: SUS Server 1.0" + NewLine +
-                    "Contwnt-Type: text/html" + NewLine +
-                    "Content-Length: " + responseBodyBytes.Length + NewLine
-                    + NewLine;
+                var httpResponse = "HTTP/1.1 200 OK" + HttpConstants.NewLine +
+                    "Server: SUS Server 1.0" + HttpConstants.NewLine +
+                    "Contwnt-Type: text/html" + HttpConstants.NewLine +
+                    "Content-Length: " + responseBodyBytes.Length + HttpConstants.NewLine
+                    + HttpConstants.NewLine;
 
                 var responseHeaderBytes = Encoding.UTF8.GetBytes(httpResponse);
 

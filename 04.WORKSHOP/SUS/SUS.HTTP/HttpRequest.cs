@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace SUS.HTTP
 {
@@ -6,6 +7,9 @@ namespace SUS.HTTP
     {
         public HttpRequest(string requestString)
         {
+            this.Headers = new List<Header>();
+            this.Cookies = new List<Cookie>();
+
             var lines = requestString.Split(new string[] { HttpConstants.NewLine }, System.StringSplitOptions.None);
             var hederLine = lines[0];
             var hederLineParts = hederLine.Split(' ');
@@ -14,27 +18,30 @@ namespace SUS.HTTP
 
             int lineIndex = 1;
             bool isInHeaders = true;
+            StringBuilder bodyBuilder = new StringBuilder();
 
             while (lineIndex < lines.Length)
             {
                 var line = lines[lineIndex];
                 lineIndex++;
 
-                if (isInHeaders)
-                {
-
-                }
-                else
-                {
-
-                }
-
                 if (string.IsNullOrWhiteSpace(line))
                 {
                     isInHeaders = false;
-                    break;
+                    continue;
+                }
+                if (isInHeaders)
+                {
+                    this.Headers.Add(new Header(line));
+                }
+                else
+                {
+                    bodyBuilder.AppendLine(line);
                 }
             }
+
+            this.Body = bodyBuilder.ToString();
+
         }
 
         public string Path { get; set; }
