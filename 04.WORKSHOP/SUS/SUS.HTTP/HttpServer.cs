@@ -71,7 +71,7 @@ namespace SUS.HTTP
                     var requestAsString = Encoding.UTF8.GetString(data.ToArray());
 
                     var request = new HttpRequest(requestAsString);
-                    Console.WriteLine(requestAsString);
+                    Console.WriteLine($"{request.Method} {request.Path} => {request.Headers.Count} headers");
 
                     var responseHtml = "<h1>Welcome from Krisi!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
                     var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
