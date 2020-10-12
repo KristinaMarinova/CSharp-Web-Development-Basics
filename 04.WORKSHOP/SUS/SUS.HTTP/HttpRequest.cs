@@ -14,7 +14,7 @@ namespace SUS.HTTP
             var lines = requestString.Split(new string[] { HttpConstants.NewLine }, System.StringSplitOptions.None);
             var hederLine = lines[0];
             var hederLineParts = hederLine.Split(' ');
-            this.Method = (HttpMethod)Enum.Parse(typeof(HttpMethod), hederLineParts[0]);
+            this.Method = (HttpMethod)Enum.Parse(typeof(HttpMethod), hederLineParts[0], true);
             this.Path = hederLineParts[1];
 
             int lineIndex = 1;
@@ -47,8 +47,8 @@ namespace SUS.HTTP
 
         public string Path { get; set; }
         public HttpMethod Method { get; set; }
-        public List<Header> Headers { get; set; }
-        public List<Cookie> Cookies { get; set; }
+        public ICollection<Header> Headers { get; set; }
+        public ICollection<Cookie> Cookies { get; set; }
         public string Body { get; set; }
     }
 }
