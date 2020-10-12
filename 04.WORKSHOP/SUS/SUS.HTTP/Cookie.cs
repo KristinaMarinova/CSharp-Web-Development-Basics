@@ -2,11 +2,11 @@
 {
     public class Cookie
     {
-        private string cookiesAsString;
-
         public Cookie(string cookiesAsString)
         {
-            this.cookiesAsString = cookiesAsString;
+            var cookieParts = cookiesAsString.Split(new char[] { '=' }, 2);
+            this.Name = cookieParts[0];
+            this.Value = cookieParts[1];
         }
 
         public string Name { get; set; }
