@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace SUS.HTTP
@@ -13,7 +14,7 @@ namespace SUS.HTTP
             var lines = requestString.Split(new string[] { HttpConstants.NewLine }, System.StringSplitOptions.None);
             var hederLine = lines[0];
             var hederLineParts = hederLine.Split(' ');
-            this.Method = hederLineParts[0];
+            this.Method = (HttpMethod)Enum.Parse(typeof(HttpMethod), hederLineParts[0]);
             this.Path = hederLineParts[1];
 
             int lineIndex = 1;
