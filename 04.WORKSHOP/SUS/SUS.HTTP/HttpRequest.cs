@@ -45,7 +45,7 @@ namespace SUS.HTTP
         }
 
         public string Path { get; set; }
-        public string Method { get; set; }
+        public HttpMethod Method { get; set; }
         public List<Header> Headers { get; set; }
         public List<Cookie> Cookies { get; set; }
         public string Body { get; set; }
