@@ -7,7 +7,11 @@ namespace SUS.HTTP
         {
             this.StatusCode = statusCode;
             this.Body = body;
-            this.Header = new List<Header>();
+            this.Header = new List<Header>
+            {
+                {new Header("Content-Type", "???") },
+                {new Header("Content-Length", body.Length.ToString())},
+            };
         }
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> Header { get; set; }
