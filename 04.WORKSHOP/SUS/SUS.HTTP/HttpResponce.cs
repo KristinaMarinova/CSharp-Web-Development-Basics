@@ -5,5 +5,6 @@ namespace SUS.HTTP
     {
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> MyProperty { get; set; }
+        public byte[] Body { get; set; }
     }
 }
