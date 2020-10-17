@@ -20,8 +20,7 @@ namespace MyFirstMvcApp
 
             await server.StartAsync();
         }
-
-
+        
         static HttpResponce HomePage(HttpRequest request)
         {
             var responseHtml = "<h1>Welcome from Krisi!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
