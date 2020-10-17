@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text;
-
 namespace SUS.HTTP
 {
     public class HttpResponce
     {
         public HttpResponce(string contentType, byte[] body, HttpStatusCode statusCode = HttpStatusCode.Ok)
         {
+            if (body == null)
+            {
+                throw new ArgumentException(nameof(body));
+            }
             this.StatusCode = statusCode;
             this.Body = body;
             this.Headers = new List<Header>
@@ -15,7 +19,6 @@ namespace SUS.HTTP
                 {new Header("Content-Length", body.Length.ToString())},
             };
         }
-
         public override string ToString()
         {
             StringBuilder responceBuilder = new StringBuilder();
@@ -29,8 +32,6 @@ namespace SUS.HTTP
 
             return responceBuilder.ToString();
         }
-
-
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> Headers { get; set; }
         public byte[] Body { get; set; }
