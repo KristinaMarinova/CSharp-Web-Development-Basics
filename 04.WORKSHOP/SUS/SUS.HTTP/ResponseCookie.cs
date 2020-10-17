@@ -6,6 +6,7 @@ namespace SUS.HTTP
     {
         public ResponseCookie(string name, string value) : base(name, value)
         {
+            this.Path = "/";
         }
 
         public int MaxAge { get; set; }
@@ -15,12 +16,18 @@ namespace SUS.HTTP
         public override string ToString()
         {
             StringBuilder cookieBuilder = new StringBuilder();
-            cookieBuilder.Append($"{this.Name} {this.Value}");
+            cookieBuilder.Append($"{this.Name}={this.Value}; Path={this.Path};");
 
             if (MaxAge != 0)
             {
-                cookieBuilder.Append($" Max-Age={this.MaxAge}");
+                cookieBuilder.Append($" Max-Age={this.MaxAge};");
             }
+            if (this.HttpOnly)
+            {
+                cookieBuilder.Append(" HttpOnly");
+            }
+
+            return cookieBuilder.ToString();
         }
     }
 }
