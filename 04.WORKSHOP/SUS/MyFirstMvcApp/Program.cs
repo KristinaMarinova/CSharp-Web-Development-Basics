@@ -1,5 +1,8 @@
 ﻿using SUS.HTTP;
 using System;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyFirstMvcApp
@@ -21,21 +24,32 @@ namespace MyFirstMvcApp
 
         static HttpResponce HomePage(HttpRequest request)
         {
-            throw new System.NotImplementedException();
+            var responseHtml = "<h1>Welcome from Krisi!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+            var response = new HttpResponce("text/html", responseBodyBytes);
+            return response;
         }
         private static HttpResponce Favicon(HttpRequest arg)
         {
-            throw new NotImplementedException();
+            var fileBytes = File.ReadAllBytes("wwwroot/favicon.ico");
+            var response = new HttpResponce("image/vdn.microsoft.icon", fileBytes);
+            return response;
         }
 
         static HttpResponce About(HttpRequest request)
         {
-            throw new System.NotImplementedException();
+            var responseHtml = "<h1>About...</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+            var response = new HttpResponce("text/html", responseBodyBytes);
+            return response;
         }
 
         static HttpResponce Login(HttpRequest request)
         {
-            throw new System.NotImplementedException();
+            var responseHtml = "<h1>Login...</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
+            var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+            var response = new HttpResponce("text/html", responseBodyBytes);
+            return response;
         }
     }
 }

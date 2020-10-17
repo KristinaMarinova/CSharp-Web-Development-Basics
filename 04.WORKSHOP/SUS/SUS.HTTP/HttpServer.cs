@@ -76,15 +76,18 @@ namespace SUS.HTTP
                     HttpResponce response;
                     if (this.routeTable.ContainsKey(request.Path))
                     {
-
+                        var action = this.routeTable[request.Path];
+                        response = action(request);
                     }
                     else
                     {
                         response = new HttpResponce("text/html", new byte[0], HttpStatusCode.NotFount);
                     }
-                    
-                    var responseHeaderBytes = Encoding.UTF8.GetBytes(responseHtml.ToString());
 
+
+                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
+                    response.Headers.Add(new Header("Server:", "SUS Server 1.0"));
+                    var responseHeaderBytes = Encoding.UTF8.GetBytes(response.ToString());
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
                     await stream.WriteAsync(response.Body, 0, response.Body.Length);
                 }
