@@ -77,15 +77,16 @@ namespace SUS.HTTP
                     var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
                     var response = new HttpResponce("text/html", responseBodyBytes);
                     response.Headers.Add(new Header("Server:", "SUS Server 1.0"));
+                    response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
 
                     var responseHeaderBytes = Encoding.UTF8.GetBytes(responseHtml.ToString());
 
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
-                    await stream.WriteAsync(responseBodyBytes, 0, responseBodyBytes.Length);
+                    await stream.WriteAsync(response.Body, 0, response.Body.Length);
                 }
                 tcpClient.Close();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }

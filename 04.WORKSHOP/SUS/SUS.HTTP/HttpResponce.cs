@@ -18,6 +18,7 @@ namespace SUS.HTTP
                 {new Header("Content-Type", contentType) },
                 {new Header("Content-Length", body.Length.ToString())},
             };
+            this.Cookies = new List<Cookie>();
         }
         public override string ToString()
         {
@@ -26,6 +27,11 @@ namespace SUS.HTTP
             foreach (var header in Headers)
             {
                 responceBuilder.Append(header.ToString() + HttpConstants.NewLine);
+            }
+
+            foreach (var cookie in this.Cookies)
+            {
+                responceBuilder.Append("Set-Cookie: " + cookie.ToString() + HttpConstants.NewLine);
             }
 
             responceBuilder.Append(HttpConstants.NewLine);
