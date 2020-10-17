@@ -34,6 +34,7 @@ namespace SUS.HTTP
         }
         public HttpStatusCode StatusCode { get; set; }
         public ICollection<Header> Headers { get; set; }
+        public ICollection<Cookie> Cookies { get; set; }
         public byte[] Body { get; set; }
     }
 }
