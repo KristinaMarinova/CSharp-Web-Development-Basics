@@ -75,14 +75,10 @@ namespace SUS.HTTP
 
                     var responseHtml = "<h1>Welcome from Krisi!</h1>" + request.Headers.FirstOrDefault(x => x.Name == "User-Agent")?.Value;
                     var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
+                    var response = new HttpResponce("text/html", responseBodyBytes);
+                    response.Headers.Add(new Header("Server:", "SUS Server 1.0"));
 
-                    var httpResponse = "HTTP/1.1 200 OK" + HttpConstants.NewLine +
-                        "Server: SUS Server 1.0" + HttpConstants.NewLine +
-                        "Contwnt-Type: text/html" + HttpConstants.NewLine +
-                        "Content-Length: " + responseBodyBytes.Length + HttpConstants.NewLine
-                        + HttpConstants.NewLine;
-
-                    var responseHeaderBytes = Encoding.UTF8.GetBytes(httpResponse);
+                    var responseHeaderBytes = Encoding.UTF8.GetBytes(responseHtml.ToString());
 
                     await stream.WriteAsync(responseHeaderBytes, 0, responseHeaderBytes.Length);
                     await stream.WriteAsync(responseBodyBytes, 0, responseBodyBytes.Length);
