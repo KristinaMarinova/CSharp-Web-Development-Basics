@@ -2,6 +2,11 @@
 {
     public class Cookie
     {
+        public Cookie(string name, string value)
+        {
+            this.Name = name;
+            this.Value = value;
+        }
         public Cookie(string cookiesAsString)
         {
             var cookieParts = cookiesAsString.Split(new char[] { '=' }, 2);
