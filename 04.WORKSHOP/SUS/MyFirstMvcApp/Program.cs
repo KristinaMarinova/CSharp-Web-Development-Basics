@@ -1,6 +1,6 @@
 ﻿using MyFirstMvcApp.Controllers;
-using SUS.HTTP;
-using System.Diagnostics;
+using SUS.MvcFramework;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace MyFirstMvcApp
 {
@@ -8,17 +8,17 @@ namespace MyFirstMvcApp
     {
         static async Task Main(string[] args)
         {
-            IHttpServer server = new HttpServer();
-            server.AddRoute("/", new HomeController().Index);
-            server.AddRoute("/favicon.ico", new StaticFilesController().Favicon);
-            server.AddRoute("/users/login", new UsersController().Login);
-            server.AddRoute("/users/register", new UsersController().Register);
-            server.AddRoute("/cards/all", new CardsController().All);
-            server.AddRoute("/cards/add", new CardsController().Add);
-            server.AddRoute("/cards/collection", new CardsController().Collection);
+            List<Route> routeTable = new List<Route>();
 
-            Process.Start(@"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe", "http://localhost/");
-            await server.StartAsync(80);
+            routeTable.Add(new Route("/", new HomeController().Index));
+            routeTable.Add(new Route("/favicon.ico", new StaticFilesController().Favicon));
+            routeTable.Add(new Route("/users/login", new UsersController().Login));
+            routeTable.Add(new Route("/users/register", new UsersController().Register));
+            routeTable.Add(new Route("/cards/all", new CardsController().All));
+            routeTable.Add(new Route("/cards/add", new CardsController().Add));
+            routeTable.Add(new Route("/cards/collection", new CardsController().Collection));
+
+            await Host.CreateHostAsync(routeTable, 80);
         }
     }
 }

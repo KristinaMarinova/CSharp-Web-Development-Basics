@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SUS.MvcFramework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -12,17 +13,10 @@ namespace SUS.HTTP
 {
     public class HttpServer : IHttpServer
     {
-        IDictionary<string, Func<HttpRequest, HttpResponce>> routeTable = new Dictionary<string, Func<HttpRequest, HttpResponce>>();
-        public void AddRoute(string path, System.Func<HttpRequest, HttpResponce> action)
+        List<Route> routeTable;
+        public HttpServer(List<Route> routeTable)
         {
-            if (routeTable.ContainsKey(path))
-            {
-                routeTable[path] = action;
-            }
-            else
-            {
-                routeTable.Add(path, action);
-            }
+            this.routeTable = routeTable;
         }
 
         public async Task StartAsync(int port)
@@ -74,16 +68,15 @@ namespace SUS.HTTP
                     Console.WriteLine($"{request.Method} {request.Path} => {request.Headers.Count} headers");
 
                     HttpResponce response;
-                    if (this.routeTable.ContainsKey(request.Path))
+                    var route = this.routeTable.FirstOrDefault(x => x.Path == request.Path);
+                    if (route != null)
                     {
-                        var action = this.routeTable[request.Path];
-                        response = action(request);
+                        response = route.Action(request);
                     }
                     else
                     {
                         response = new HttpResponce("text/html", new byte[0], HttpStatusCode.NotFount);
                     }
-
 
                     response.Cookies.Add(new ResponseCookie("sid", Guid.NewGuid().ToString()) { HttpOnly = true, MaxAge = 60 * 24 * 60 * 60 });
                     response.Headers.Add(new Header("Server:", "SUS Server 1.0"));
