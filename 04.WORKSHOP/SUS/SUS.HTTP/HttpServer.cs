@@ -1,9 +1,7 @@
 ﻿using SUS.MvcFramework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -68,7 +66,7 @@ namespace SUS.HTTP
                     Console.WriteLine($"{request.Method} {request.Path} => {request.Headers.Count} headers");
 
                     HttpResponce response;
-                    var route = this.routeTable.FirstOrDefault(x => x.Path == request.Path);
+                    var route = this.routeTable.FirstOrDefault(x => string.Compare(x.Path, request.Path, true) == 0);
                     if (route != null)
                     {
                         response = route.Action(request);
