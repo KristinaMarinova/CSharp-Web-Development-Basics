@@ -1,5 +1,4 @@
 ﻿using SUS.HTTP;
-using System.IO;
 using System.Text;
 namespace SUS.MvcFramework
 {
@@ -7,7 +6,7 @@ namespace SUS.MvcFramework
     {
         public HttpResponce View(string viewPath)
         {
-            var responseHtml = System.IO.File.ReadAllText(viewPath);
+            var responseHtml = System.IO.File.ReadAllText("Views/" + viewPath);
             var responseBodyBytes = Encoding.UTF8.GetBytes(responseHtml);
             var response = new HttpResponce("text/html", responseBodyBytes);
             return response;

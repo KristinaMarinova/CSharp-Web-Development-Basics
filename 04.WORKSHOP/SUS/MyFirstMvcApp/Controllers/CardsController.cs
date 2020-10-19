@@ -6,15 +6,15 @@ namespace MyFirstMvcApp.Controllers
     {
         public HttpResponce Add(HttpRequest request)
         {
-            return View("Views/Cards/Add.html");
+            return View("Add");
         }
         public HttpResponce All(HttpRequest request)
         {
-            return View("Views/Cards/All.html");
+            return View("All");
         }
         public HttpResponce Collection(HttpRequest request)
         {
-            return View("Views/Cards/Collection.html");
+            return View("Collection");
         }
     }
 }
