@@ -69,6 +69,8 @@ namespace Suls.Controllers
             {
                 return this.Error("Passwords do not match");
             }
+
+            this.usersService.CreateUser(input.Username, input.Email, input.Password);
         }
     }
 }
