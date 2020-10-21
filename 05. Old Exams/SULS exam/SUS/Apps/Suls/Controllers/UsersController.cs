@@ -71,6 +71,8 @@ namespace Suls.Controllers
             }
 
             this.usersService.CreateUser(input.Username, input.Email, input.Password);
+
+            return this.Redirect("/Users/Login");
         }
     }
 }
