@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Suls.ViewModels.Users
+﻿namespace Suls.ViewModels.Users
 {
-    class RegisterInputModel
+    public class RegisterInputModel
     {
         public string Username { get; set; }
         public string Email { get; set; }
