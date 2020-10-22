@@ -24,6 +24,10 @@ namespace Suls.Controllers
         [HttpPost]
         public HttpResponse Create(string name, ushort points)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
             if (string.IsNullOrEmpty(name) || name.Length < 5 || name.Length > 20)
             {
                 return this.Error("Name should be between 5 and 20 caracters.");
