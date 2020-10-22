@@ -10,7 +10,7 @@ namespace Suls.Data
         public User()
         {
             this.Id = Guid.NewGuid().ToString();
-            this.Submissions = new HashSet<Submissions>();
+            this.Submissions = new HashSet<Submission>();
         }
         public string Id { get; set; }
 
@@ -24,7 +24,7 @@ namespace Suls.Data
         [Required]
         public string Password { get; set; }
 
-        public ICollection<Submissions> Submissions { get; set; }
+        public ICollection<Submission> Submissions { get; set; }
 
     }
 }

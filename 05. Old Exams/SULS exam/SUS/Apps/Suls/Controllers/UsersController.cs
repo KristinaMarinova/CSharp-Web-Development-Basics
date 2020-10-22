@@ -17,6 +17,10 @@ namespace Suls.Controllers
 
         public HttpResponse Login()
         {
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
             return this.View();
         }
 
@@ -34,6 +38,10 @@ namespace Suls.Controllers
 
         public HttpResponse Register()
         {
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
             return this.View();
         }
 
@@ -77,6 +85,10 @@ namespace Suls.Controllers
 
         public HttpResponse Logout()
         {
+            if (this.IsUserSignedIn())
+            {
+                return this.Redirect("/");
+            }
             this.SignOut();
             return this.Redirect("/");
         }

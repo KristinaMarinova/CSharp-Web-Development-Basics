@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Suls.Data
 {
-    public class Submissions
+    public class Submission
     {
-        public Submissions()
+        public Submission()
         {
             this.Id = Guid.NewGuid().ToString();
         }
