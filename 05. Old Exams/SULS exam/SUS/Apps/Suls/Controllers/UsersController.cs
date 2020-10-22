@@ -85,7 +85,7 @@ namespace Suls.Controllers
 
         public HttpResponse Logout()
         {
-            if (this.IsUserSignedIn())
+            if (!this.IsUserSignedIn())
             {
                 return this.Redirect("/");
             }

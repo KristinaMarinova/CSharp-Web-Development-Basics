@@ -49,6 +49,10 @@ namespace Suls.Controllers
 
         public HttpResponse Delete(string id)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
             this.submissionsService.Delete(id);
             return this.Redirect("/");
         }
