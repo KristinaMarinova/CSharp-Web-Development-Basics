@@ -44,6 +44,10 @@ namespace Suls.Controllers
 
         public HttpResponse Details(string id)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
             var viewModel = this.problemsService.GetById(id);
             return this.View(viewModel);
         }
