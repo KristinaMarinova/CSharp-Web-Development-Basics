@@ -19,6 +19,10 @@ namespace Suls.Controllers
 
         public HttpResponse Create(string id)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
             var viewModel = new CrateViewModel
             {
                 ProblemId = id,
@@ -30,6 +34,10 @@ namespace Suls.Controllers
         [HttpPost]
         public HttpResponse Create(string problemId, string code)
         {
+            if (!this.IsUserSignedIn())
+            {
+                return this.Redirect("/Users/Login");
+            }
             if (string.IsNullOrEmpty(code) || code.Length < 30 || code.Length > 800)
             {
                 return this.Error("Code should be between 30 and 800 characters.");
