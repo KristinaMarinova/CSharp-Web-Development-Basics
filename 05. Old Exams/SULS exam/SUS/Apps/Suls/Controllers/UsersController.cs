@@ -45,12 +45,12 @@ namespace Suls.Controllers
                 return this.Error("Username should be between 5 and 20 characters.");
             }
 
-            if (!this.usersService.IsEmailAvailable(input.Username))
+            if (!this.usersService.IsUsernameAvailable(input.Username))
             {
                 return this.Error("Username already taken.");
             }
 
-            if (string.IsNullOrEmpty(input.Email) || new EmailAddressAttribute().IsValid(input.Email))
+            if (string.IsNullOrEmpty(input.Email) || !new EmailAddressAttribute().IsValid(input.Email))
             {
                 return this.Error("Invalid email address.");
             }
